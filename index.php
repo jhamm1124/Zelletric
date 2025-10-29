@@ -208,8 +208,75 @@
         <i class="fas fa-arrow-up"></i>
     </a>
     <script>
-    // Header scroll effect
+    // Mobile menu functionality
     document.addEventListener('DOMContentLoaded', function() {
+        // Mobile menu elements
+        const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+        const mainNav = document.querySelector('.main-nav');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const menuIcon = mobileMenuToggle.querySelector('i');
+        let isMenuOpen = false;
+        
+        // Toggle menu function
+        function toggleMenu() {
+            isMenuOpen = !isMenuOpen;
+            
+            // Toggle menu visibility
+            if (isMenuOpen) {
+                mainNav.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                menuIcon.className = 'fas fa-times';
+            } else {
+                mainNav.classList.remove('active');
+                document.body.style.overflow = 'auto';
+                menuIcon.className = 'fas fa-bars';
+            }
+        }
+        
+        // Toggle menu when clicking the hamburger icon
+        mobileMenuToggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            toggleMenu();
+        });
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', function(e) {
+            if (isMenuOpen && !mainNav.contains(e.target) && e.target !== mobileMenuToggle) {
+                toggleMenu();
+            }
+        });
+        
+        // Close menu when clicking on a nav link
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                if (window.innerWidth <= 768) {
+                    toggleMenu();
+                }
+            });
+        });
+        
+        // Toggle menu when clicking the hamburger icon
+        if (mobileMenuToggle) {
+            mobileMenuToggle.setAttribute('aria-expanded', 'false');
+            mobileMenuToggle.addEventListener('click', toggleMenu);
+        }
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (window.innerWidth <= 768 && 
+                !e.target.closest('.main-nav') && 
+                !e.target.closest('.mobile-menu-toggle')) {
+                navList.classList.remove('active');
+                mobileMenuToggle.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = 'auto';
+                const icon = mobileMenuToggle.querySelector('i');
+                if (icon) {
+                    icon.className = 'fas fa-bars';
+                }
+            }
+        });
+
+        // Header scroll effect
         const header = document.querySelector('.site-header');
         
         // Add initial styles
