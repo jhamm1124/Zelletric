@@ -33,7 +33,7 @@
     <section id="home" class="hero">
         <div class="hero-content">
             <h1>Professional Electrical Services You Can Trust</h1>
-            <p>6 Days a Week • Licensed & Insured • Free Estimates</p>
+            <p>6 Days a Week • New/Remodeling/Repairs • Free Estimates</p>
         </div>
     </section>
 
@@ -48,7 +48,7 @@
             <div class="service-card">
                 <i class="fas fa-bolt"></i>
                 <h3>Electrical Repairs</h3>
-                <p>Fast and reliable repair services for all your electrical issues.</p>
+                <p>Fast and reliable repair services for all your electrical issues. From faulty outlets and flickering lights to full circuit troubleshooting, we quickly diagnose and fix problems to keep your home safe and running smoothly.</p>
             </div>
             <div class="service-card">
                 <i class="fas fa-home"></i>
@@ -94,7 +94,7 @@
                                 <i class="fas fa-star"></i>
                             </div>
                             <h3>Customer-First</h3>
-                            <p>Your satisfaction is our top priority. We listen, understand, and deliver beyond expectations.</p>
+                            <p>Your satisfaction is our top priority. We listen, understand, and deliver expectations.</p>
                         </div>
                     </div>
                 </div>
@@ -171,14 +171,14 @@
                 <h4>Contact Info</h4>
                 <ul class="contact-info">
                     <li><i class="fas fa-map-marker-alt"></i> Dillsburg, PA 17019</li>
-                    <li><i class="fas fa-phone"></i> <a href="tel:+1234567890">(123) 456-7890</a></li>
-                    <li><i class="fas fa-envelope"></i> <a href="mailto:info@zellectric.com">info@zellectric.com</a></li>
+                    <li><i class="fas fa-phone"></i> <a href="tel:+7174620764">(717) 462-0764</a></li>
+                    <li><i class="fas fa-envelope"></i> <a href="mailto:contact@zellectric.com">contact@zellectric.com</a></li>
                 </ul>
             </div>
 
             <div class="footer-section">
                 <h4>Zellectric</h4>
-                <p class="footer-about">Your trusted partner for all electrical needs. Providing professional, reliable, and affordable electrical services since 2008.</p>
+                <p class="footer-about">Your trusted partner for all electrical needs. Providing professional, reliable, and affordable electrical services since 2025.</p>
                 <div class="social-links">
                     <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
                     <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
@@ -207,6 +207,65 @@
     <a href="#" id="back-to-top" aria-label="Back to top">
         <i class="fas fa-arrow-up"></i>
     </a>
+    <script>
+    // Header scroll effect
+    document.addEventListener('DOMContentLoaded', function() {
+        const header = document.querySelector('.site-header');
+        
+        // Add initial styles
+        header.style.transition = 'all 0.3s ease';
+        header.style.background = 'rgba(255, 255, 255, 1)'; // Initial state: solid white
+        
+        function updateHeader() {
+            if (window.scrollY > 50) {
+                header.style.background = 'rgba(255, 255, 255, 0.7)';
+                header.style.backdropFilter = 'blur(10px)';
+                header.style.webkitBackdropFilter = 'blur(10px)';
+                header.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.15)';
+                header.style.padding = '0.7rem 0';
+                header.style.borderBottom = '2px solid #f59e0b';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 1)';
+                header.style.backdropFilter = 'none';
+                header.style.webkitBackdropFilter = 'none';
+                header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.05)';
+                header.style.padding = '1.2rem 0';
+                header.style.borderBottom = 'none';
+            }
+        }
+        
+        // Initial check
+        updateHeader();
+        
+        // Listen for scroll events
+        window.addEventListener('scroll', updateHeader);
+        
+        // Smooth scroll for navigation links
+        function setupNavigationLink(selector) {
+            document.querySelectorAll(selector).forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        const headerOffset = 50; // Increased from 100 to 120 to land slightly below section top
+                        const elementPosition = targetElement.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
 
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        }
+
+        // Set up all navigation links
+        setupNavigationLink('a[href^="#"]');
+    });
+
+        
+    </script>
 </body>
 </html>
