@@ -13,7 +13,9 @@
     <header class="site-header">
         <div class="header-container">
             <div class="logo-wrapper">
-                <img src="Logo.png" alt="Zellectric Electrical Services" class="header-logo">
+                <a href="index.php" class="logo-link">
+                    <img src="Logo.png" alt="Zellectric Electrical Services" class="header-logo">
+                </a>
             </div>
             <nav class="main-nav">
                 <ul class="nav-list">
@@ -47,18 +49,18 @@
         <div class="services-grid">
             <div class="service-card">
                 <i class="fas fa-bolt"></i>
-                <h3>Electrical Repairs</h3>
-                <p>Fast and reliable repair services for all your electrical issues. From faulty outlets and flickering lights to full circuit troubleshooting, we quickly diagnose and fix problems to keep your home safe and running smoothly.</p>
+                <h3>Electrical Repairs & Maintenance</h3>
+                <p>Expert troubleshooting and repair services for all your electrical needs. We fix everything from flickering lights to circuit breakers, ensuring your home's electrical system is safe and efficient. Includes comprehensive maintenance to prevent future issues.</p>
             </div>
             <div class="service-card">
                 <i class="fas fa-home"></i>
-                <h3>Residential Wiring</h3>
-                <p>Complete home wiring solutions, from new builds to renovations. We handle everything from basic wiring to complete electrical system installations with precision and care.</p>
+                <h3>Residential Electric</h3>
+                <p>Professional wiring and installation services for both new constructions and renovations. Our certified electricians handle everything from basic wiring to complete electrical system installations with precision, including lighting, ceiling fans, and smart home integration.</p>
             </div>
             <div class="service-card">
-                <i class="fas fa-lightbulb"></i>
-                <h3>Lighting Installation</h3>
-                <p>Transform your space with our professional indoor and outdoor lighting solutions. From energy-efficient LED installations to custom lighting design, we've got you covered.</p>
+                <i class="fas fa-charging-station"></i>
+                <h3>EV & Energy Solutions</h3>
+                <p>Future-proof your home with our EV charging station installations and energy-efficient solutions. We'll help you select and install the perfect charging solution for your electric vehicle while optimizing your home's energy usage for maximum efficiency and savings.</p>
             </div>
         </div>
     </section>
@@ -193,11 +195,11 @@
             <div class="footer-container">
                 <p>&copy; 2025 Zellectric. All Rights Reserved.</p>
                 <div class="footer-legal">
-                    <a href="#">Privacy Policy</a>
+                    <a href="privacy-policy.php">Privacy Policy</a>
                     <span>|</span>
-                    <a href="#">Terms of Service</a>
+                    <a href="terms-of-service.php">Terms of Service</a>
                     <span>|</span>
-                    <a href="#">Sitemap</a>
+                    <a href="sitemap.php">Sitemap</a>
                 </div>
             </div>
         </div>
