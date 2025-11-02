@@ -3,9 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Privacy Policy - Zellectric</title>
+    <title>Privacy Policy | Zellectric</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="images/Lightbulb.png">
+    <link rel="apple-touch-icon" href="images/Lightbulb.png">
+    <link rel="shortcut icon" href="images/Lightbulb.png" type="image/x-icon">
     <style>
         .legal-container {
             max-width: 1000px;
@@ -106,12 +110,8 @@
         <p>We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new policy on this page.</p>
         
         <h2>7. Contact Us</h2>
-        <p>If you have any questions about this Privacy Policy, please contact us at:</p>
         <p>
-            Zellectric<br>
-            Dillsburg, PA 17019<br>
-            Phone: (717) 462-0764<br>
-            Email: privacy@zellectric.com
+            <a href="index.php#contact" class="contact-link" style="text-decoration: underline; font-weight: bold;">Contact Us</a> for any questions about this Privacy Policy.
         </p>
     </main>
 

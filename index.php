@@ -7,6 +7,10 @@
     <title>Zellectric | Professional Electrical Services</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css?v=1.1">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="images/Lightbulb.png">
+    <link rel="apple-touch-icon" href="images/Lightbulb.png">
+    <link rel="shortcut icon" href="images/Lightbulb.png" type="image/x-icon">
 </head>
 <body>
     <!-- Header with Navigation -->
@@ -34,15 +38,9 @@
     <!-- Hero Section -->
     <section id="home" class="hero">
         <div class="hero-container">
-            <div class="hero-image left-image">
-                <img src="images/workingpic.jpg" alt="Electrical work in progress" class="hero-img">
-            </div>
             <div class="hero-content">
                 <h1>Professional Electrical Services You Can Trust</h1>
                 <p>6 Days a Week • New/Remodeling/Repairs • Free Estimates</p>
-            </div>
-            <div class="hero-image right-image">
-                <img src="images/workingpic2.jpg" alt="Electrical installation" class="hero-img">
             </div>
         </div>
     </section>

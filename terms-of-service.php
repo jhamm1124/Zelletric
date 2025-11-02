@@ -3,9 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Terms of Service - Zellectric</title>
+    <title>Terms of Service | Zellectric</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="images/lightbulb.png">
+    <link rel="apple-touch-icon" href="images/lightbulb.png">
+    <link rel="shortcut icon" href="images/lightbulb.png" type="image/x-icon">
     <style>
         .legal-container {
             max-width: 1000px;
@@ -91,12 +95,8 @@
         <p>We reserve the right to modify these Terms at any time. Any changes will be effective immediately upon posting on our website.</p>
         
         <h2>8. Contact Us</h2>
-        <p>If you have any questions about these Terms, please contact us at:</p>
         <p>
-            Zellectric<br>
-            Dillsburg, PA 17019<br>
-            Phone: (717) 462-0764<br>
-            Email: contact@zellectric.com
+            <a href="index.php#contact" class="contact-link" style="text-decoration: underline; font-weight: bold;">Contact Us</a> for any questions about this Privacy Policy.
         </p>
     </main>
 
