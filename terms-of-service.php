@@ -79,7 +79,7 @@
         <p>When you schedule a service appointment, we will make every effort to arrive at the scheduled time. However, emergency situations or unforeseen circumstances may cause delays.</p>
         
         <h2>4. Payment Terms</h2>
-        <p>Payment is due upon completion of work unless otherwise agreed in writing. We accept various forms of payment including cash, check, and major credit cards.</p>
+        <p>Payment is due upon completion of work unless otherwise agreed in writing. We accept various forms of payment including cash, check, and many cash apps.</p>
         
         <h2>5. Warranties</h2>
         <p>We stand behind our work with a 1-year labor warranty on all installations and repairs. Manufacturer warranties apply to parts and equipment.</p>

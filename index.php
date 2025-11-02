@@ -6,7 +6,7 @@
     <meta name="description" content="Professional electrical services for residential and commercial properties. 24/7 emergency service available.">
     <title>Zellectric | Professional Electrical Services</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=1.1">
 </head>
 <body>
     <!-- Header with Navigation -->
@@ -14,7 +14,7 @@
         <div class="header-container">
             <div class="logo-wrapper">
                 <a href="index.php" class="logo-link">
-                    <img src="Logo.png" alt="Zellectric Electrical Services" class="header-logo">
+                    <img src="images/Logo.png" alt="Zellectric Electrical Services" class="header-logo">
                 </a>
             </div>
             <nav class="main-nav">
@@ -33,9 +33,17 @@
 
     <!-- Hero Section -->
     <section id="home" class="hero">
-        <div class="hero-content">
-            <h1>Professional Electrical Services You Can Trust</h1>
-            <p>6 Days a Week • New/Remodeling/Repairs • Free Estimates</p>
+        <div class="hero-container">
+            <div class="hero-image left-image">
+                <img src="images/workingpic.jpg" alt="Electrical work in progress" class="hero-img">
+            </div>
+            <div class="hero-content">
+                <h1>Professional Electrical Services You Can Trust</h1>
+                <p>6 Days a Week • New/Remodeling/Repairs • Free Estimates</p>
+            </div>
+            <div class="hero-image right-image">
+                <img src="images/workingpic2.jpg" alt="Electrical installation" class="hero-img">
+            </div>
         </div>
     </section>
 
@@ -160,14 +168,14 @@
                 </ul>
             </div>
             
-            <div class="footer-section">
+            <!-- <div class="footer-section">
                 <h4>Our Services</h4>
                 <ul class="footer-links">
-                    <li><a href="#">Electrical Repairs</a></li>
-                    <li><a href="#">Residential Wiring</a></li>
-                    <li><a href="#">Lighting Installation</a></li>
+                    <li><a href="#" class="no-hover">Electrical Repairs</a></li>
+                    <li><a href="#" class="no-hover">Residential Wiring</a></li>
+                    <li><a href="#" class="no-hover">Lighting Installation</a></li>
                 </ul>
-            </div>
+            </div> -->
             
             <div class="footer-section">
                 <h4>Contact Info</h4>
@@ -181,12 +189,12 @@
             <div class="footer-section">
                 <h4>Zellectric</h4>
                 <p class="footer-about">Your trusted partner for all electrical needs. Providing professional, reliable, and affordable electrical services since 2025.</p>
-                <div class="social-links">
+                <!-- <div class="social-links">
                     <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
                     <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
                     <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
                     <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                </div>
+                </div> -->
             </div>
 
         </div>

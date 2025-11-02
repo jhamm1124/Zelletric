@@ -50,7 +50,7 @@
         <div class="header-container">
             <div class="logo-wrapper">
                 <a href="index.php" class="logo-link">
-                    <img src="Logo.png" alt="Zellectric Electrical Services" class="header-logo">
+                    <img src="images/Logo.png" alt="Zellectric Electrical Services" class="header-logo">
                 </a>
             </div>
             <a href="index.php" class="back-link"><i class="fas fa-arrow-left"></i> Back to Home</a>

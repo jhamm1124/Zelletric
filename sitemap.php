@@ -34,7 +34,7 @@
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 1rem;
         }
-        .sitemap-links a {
+        .sitemap-links a, .service-item {
             display: flex;
             align-items: center;
             padding: 0.75rem 1rem;
@@ -42,11 +42,16 @@
             text-decoration: none;
             border-radius: 4px;
             transition: all 0.3s ease;
+            cursor: default;
         }
         .sitemap-links a:hover {
             background-color: #f7fafc;
             color: #2b6cb0;
             transform: translateX(5px);
+        }
+        
+        .service-item {
+            pointer-events: none;
         }
         .sitemap-links i {
             margin-right: 0.75rem;
@@ -75,7 +80,7 @@
     <header class="site-header">
         <div class="header-container">
             <div class="logo-wrapper">
-                <img src="Logo.png" alt="Zellectric Electrical Services" class="header-logo">
+                <img src="images/Logo.png" alt="Zellectric Electrical Services" class="header-logo">
             </div>
             <a href="index.php" class="back-link">
                 <i class="fas fa-arrow-left"></i> Back to Home
@@ -108,18 +113,18 @@
         <div class="sitemap-section">
             <h2>Our Services</h2>
             <div class="sitemap-links">
-                <a href="index.php#services">
+                <div class="service-item">
                     <i class="fas fa-tools"></i> Electrical Repairs
-                </a>
-                <a href="index.php#services">
+                </div>
+                <div class="service-item">
                     <i class="fas fa-wrench"></i> Residential Wiring
-                </a>
-                <a href="index.php#services">
+                </div>
+                <div class="service-item">
                     <i class="fas fa-lightbulb"></i> Lighting & Fan Installation
-                </a>
-                <a href="index.php#services">
+                </div>
+                <div class="service-item">
                     <i class="fas fa-charging-station"></i> EV Charging Solutions
-                </a>
+                </div>
             </div>
         </div>
         
@@ -147,7 +152,7 @@
                 <a href="mailto:contact@zellectric.com">
                     <i class="fas fa-envelope"></i> contact@zellectric.com
                 </a>
-                <a href="#" onclick="alert('Our business hours are Monday-Friday: 8:00 AM - 6:00 PM')">
+                <a href="#" onclick="alert('Our business hours are Monday-Friday: 3:00 PM - 8:00 PM')">
                     <i class="far fa-clock"></i> Business Hours
                 </a>
             </div>

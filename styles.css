@@ -72,7 +72,7 @@ a {
     transition: var(--transition);
 }
 
-a:hover {
+a:not(.no-hover):hover {
     color: var(--primary-dark);
 }
 
@@ -271,15 +271,15 @@ body {
     color: var(--text-color);
 }
 
-/* Hero Section */
+/* Hero Section - Debug Mode */
 .hero {
     background-color: var(--primary-color);
     color: white;
-    padding: 12rem 0 8rem;
-    text-align: center;
-    margin-top: 80px; /* Account for fixed header */
+    padding: 6rem 1.5rem;
     position: relative;
     overflow: hidden;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .hero::before {
@@ -289,24 +289,66 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-    opacity: 0.9;
+    background: linear-gradient(135deg, rgba(26, 54, 93, 0.9) 0%, rgba(15, 31, 61, 0.9) 100%);
     z-index: 1;
 }
 
-.hero-content {
+.hero-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 1800px;
+    margin: 0 auto;
+    padding: 2rem;
     position: relative;
     z-index: 2;
+    min-height: 400px;
+    width: 100%;
+    box-sizing: border-box;
+    gap: 1rem;
+    flex-wrap: nowrap;
+    overflow: hidden;
 }
 
 .hero-content {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 0 2rem;
+    flex: 0 0 40%;
+    text-align: center;
+    padding: 0 1rem;
+    min-width: 300px;
+}
+
+.hero-image {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 30%;
+    height: auto;
+    overflow: hidden;
+}
+
+.left-image {
+    justify-content: flex-end;
+    padding-right: 1rem;
+}
+
+.right-image {
+    justify-content: flex-start;
+    padding-left: 1rem;
+}
+
+.hero-img {
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    object-fit: contain;
+    margin: 0;
 }
 
 .hero h1 {
-    font-size: 3rem;
+    font-size: 2.5rem;
     margin-bottom: 1.5rem;
     line-height: 1.2;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
@@ -316,6 +358,23 @@ body {
     font-size: 1.25rem;
     margin-bottom: 2.5rem;
     color: rgba(255, 255, 255, 0.9);
+}
+
+@media (max-width: 1024px) {
+    .hero-container {
+        flex-direction: column;
+        padding: 2rem;
+    }
+    
+    .hero-image {
+        max-width: 80%;
+        margin: 1rem 0;
+    }
+    
+    .hero-content {
+        order: -1;
+        max-width: 100%;
+    }
 }
 
 .hero-buttons {
@@ -1357,9 +1416,9 @@ body {
     font-size: 0.95rem;
 }
 
-.footer-links a:hover {
+.footer-links a:not(.no-hover):hover {
     color: var(--accent-color);
-    transform: translateX(5px);
+    padding-left: 5px;
 }
 
 .contact-info {
