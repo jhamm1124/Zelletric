@@ -1,47 +1,165 @@
 <?php
-// Get form data
-$name = $_POST['name'] ?? '';
-$email = $_POST['email'] ?? '';
-$phone = $_POST['phone'] ?? '';
-$service = $_POST['service'] ?? '';
-$message = $_POST['message'] ?? '';
+// Start session and set security headers
+session_start();
+header('X-Content-Type-Options: nosniff');
+header('X-Frame-Options: DENY');
+header('X-XSS-Protection: 1; mode=block');
+header('Referrer-Policy: strict-origin-when-cross-origin');
+
+// Rate limiting
+$rateLimitWindow = 900; // 15 minutes in seconds
+$maxRequests = 5; // Max requests per window
+$ip = $_SERVER['REMOTE_ADDR'];
+$rateLimitKey = 'rate_limit_' . md5($ip);
+
+// Initialize rate limit if not set
+if (!isset($_SESSION[$rateLimitKey])) {
+    $_SESSION[$rateLimitKey] = [
+        'count' => 0,
+        'reset_time' => time() + $rateLimitWindow
+    ];
+}
+
+// Check rate limit
+if ($_SESSION[$rateLimitKey]['count'] >= $maxRequests) {
+    if (time() < $_SESSION[$rateLimitKey]['reset_time']) {
+        http_response_code(429); // Too Many Requests
+        echo json_encode([
+            'success' => false, 
+            'message' => 'Too many requests. Please try again later.'
+        ]);
+        exit;
+    } else {
+        // Reset the counter if the window has passed
+        $_SESSION[$rateLimitKey] = [
+            'count' => 0,
+            'reset_time' => time() + $rateLimitWindow
+        ];
+    }
+}
+
+// Increment request count
+$_SESSION[$rateLimitKey]['count']++;
+
+// CSRF Protection
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== ($_SESSION['csrf_token'] ?? '')) {
+        http_response_code(403);
+        echo json_encode([
+            'success' => false, 
+            'message' => 'Invalid request. Please refresh the page and try again.'
+        ]);
+        exit;
+    }
+}
+
+// Generate new CSRF token if not exists
+if (!isset($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
+// Function to sanitize input
+function sanitizeInput($data) {
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+    return $data;
+}
+
+// Get and sanitize form data
+$name = sanitizeInput($_POST['name'] ?? '');
+$email = filter_var($_POST['email'] ?? '', FILTER_SANITIZE_EMAIL);
+$phone = sanitizeInput($_POST['phone'] ?? '');
+$service = sanitizeInput($_POST['service'] ?? '');
+$message = sanitizeInput($_POST['message'] ?? '');
 
 // Validate required fields
 if (empty($name) || empty($email) || empty($message)) {
     http_response_code(400);
-    echo json_encode(['success' => false, 'message' => 'Please fill in all required fields.']);
+    echo json_encode([
+        'success' => false, 
+        'message' => 'Please fill in all required fields.'
+    ]);
     exit;
 }
 
-// Set recipient email (replace with your email on Namecheap)
-$to = 'contact@zellectric.com';
-$subject = "New Contact Form Submission: $service";
+// Validate email format
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    http_response_code(400);
+    echo json_encode([
+        'success' => false, 
+        'message' => 'Please enter a valid email address.'
+    ]);
+    exit;
+}
 
-// Build email content
+// Validate name length
+if (strlen($name) > 100) {
+    http_response_code(400);
+    echo json_encode([
+        'success' => false, 
+        'message' => 'Name is too long. Maximum 100 characters allowed.'
+    ]);
+    exit;
+}
+
+// Validate message length
+if (strlen($message) > 2000) {
+    http_response_code(400);
+    echo json_encode([
+        'success' => false, 
+        'message' => 'Message is too long. Maximum 2000 characters allowed.'
+    ]);
+    exit;
+}
+
+// Set recipient email for testing
+$to = 'jdhamm17@gmail.com';
+
+// Sanitize service for subject
+$subject = 'New Contact Form Submission: ' . 
+    ($service ? preg_replace('/[^\w\s-]/', '', $service) : 'General Inquiry');
+
+// Build email content with proper escaping
 $email_content = "New Contact Form Submission\n\n";
-$email_content .= "Name: $name\n";
-$email_content .= "Email: $email\n";
-$email_content .= "Phone: " . ($phone ?: 'Not provided') . "\n";
-$email_content .= "Service: $service\n\n";
-$email_content .= "Message:\n$message\n";
+$email_content .= "Name: " . str_replace("\r\n", "\n", $name) . "\n";
+$email_content .= "Email: " . $email . "\n";
+$email_content .= "Phone: " . ($phone ? str_replace("\r\n", "\n", $phone) : 'Not provided') . "\n";
+$email_content .= "Service: " . str_replace("\r\n", "\n", $service) . "\n\n";
+$email_content .= "Message:\n" . str_replace("\r\n", "\n", $message) . "\n";
 
-// Set headers
+// Set secure headers
 $headers = [
-    'From' => "$name <$email>",
+    'From' => 'Zellectric Contact Form <noreply@' . $_SERVER['HTTP_HOST'] . '>',
     'Reply-To' => $email,
-    'X-Mailer' => 'PHP/' . phpversion()
+    'X-Mailer' => 'PHP/' . phpversion(),
+    'MIME-Version' => '1.0',
+    'Content-Type' => 'text/plain; charset=UTF-8',
+    'X-AntiAbuse' => 'This is a contact form submission from ' . $_SERVER['HTTP_HOST']
 ];
 
 // Convert headers to string
 $headers_string = '';
 foreach ($headers as $key => $value) {
-    $headers_string .= "$key: $value\r\n";
-}
+    $headers_string .= "$key: $value\r\n";}
 
-// Send email
-if (mail($to, $subject, $email_content, $headers_string)) {
-    echo json_encode(['success' => true, 'message' => 'Thank you! Your message has been sent.']);
-} else {
+// Send email with error handling
+try {
+    $mailSent = mail($to, $subject, $email_content, $headers_string);
+    
+    if ($mailSent) {
+        echo json_encode([
+            'success' => true, 
+            'message' => 'Thank you! Your message has been sent.'
+        ]);
+    } else {
+        throw new Exception('Failed to send email');
+    }
+} catch (Exception $e) {
+    error_log('Email sending failed: ' . $e->getMessage());
     http_response_code(500);
-    echo json_encode(['success' => false, 'message' => 'Failed to send message. Please try again later.']);
+    echo json_encode([
+        'success' => false, 
+        'message' => 'Failed to send message. Please try again later.'
+    ]);
 }

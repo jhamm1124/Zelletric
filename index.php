@@ -5,6 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Professional electrical services for residential and commercial properties. 24/7 emergency service available.">
     <title>Zellectric | Professional Electrical Services</title>
+    <?php
+    // Start session and generate CSRF token if it doesn't exist
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+    if (!isset($_SESSION['csrf_token'])) {
+        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+    }
+    ?>
+    <meta name="csrf-token" content="<?php echo htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8'); ?>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css?v=1.1">
     <!-- Favicon -->
@@ -115,7 +125,7 @@
         <div class="contact-container">
             <div class="contact-form">
                 <h2>Contact Us</h2>
-                <form id="contactForm">
+                <form id="contactForm" method="POST" novalidate>
                     <div class="form-row">
                         <div class="form-group">
                             <label for="name">Your Name</label>
