@@ -82,7 +82,7 @@
             <li>Provide and improve our services</li>
             <li>Process transactions and send related information</li>
             <li>Respond to your inquiries and customer service requests</li>
-            <li>Send promotional communications (with your consent)</li>
+            <li>Send promotional communications with your consent</li>
             <li>Comply with legal obligations</li>
         </ul>
         

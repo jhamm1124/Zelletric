@@ -122,45 +122,51 @@
 
     <!-- Contact Section -->
     <section id="contact" class="contact">
-        <div class="contact-container">
-            <div class="contact-form">
-                <h2>Contact Us</h2>
-                <form id="contactForm" method="POST" novalidate>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="name">Your Name</label>
-                            <input type="text" id="name" name="name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Your Email</label>
-                            <input type="email" id="email" name="email" required>
-                        </div>
+    <div class="contact-container">
+        <div class="contact-form">
+            <h2>Contact Us</h2>
+            <form id="contactForm" method="POST" action="send_email.php" novalidate>
+                <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input type="text" id="name" name="name" required>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="phone">Phone Number</label>
-                            <input type="tel" id="phone" name="phone">
-                        </div>
-                        <div class="form-group">
-                            <label for="service">Service Needed</label>
-                            <select id="service" name="service" required>
-                                <option value="">Select a Service</option>
-                                <option value="repairs">Electrical Repairs</option>
-                                <option value="residential">Residential Services</option>
-                                <option value="lighting">Lighting Installation</option>
-                                <option value="maintenance">Maintenance</option>
-                            </select>
-                        </div>
+                    <div class="form-group">
+                        <label for="email">Your Email</label>
+                        <input type="email" id="email" name="email" required>
                     </div>
-                    <div class="form-group full-width">
-                        <label for="message">How can we help you?</label>
-                        <textarea id="message" name="message" rows="4" required></textarea>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone">
                     </div>
-                    <button type="submit" class="cta-button">Send Message</button>
-                </form>
-            </div>
+                    <div class="form-group">
+                        <label for="service">Service Needed</label>
+                        <select id="service" name="service" required>
+                            <option value="">Select a Service</option>
+                            <option value="repairs">Electrical Repairs</option>
+                            <option value="residential">Residential Services</option>
+                            <option value="lighting">Lighting Installation</option>
+                            <option value="maintenance">Maintenance</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group full-width">
+                    <label for="message">How can we help you?</label>
+                    <textarea id="message" name="message" rows="4" required></textarea>
+                </div>
+
+                <button type="submit" class="cta-button">Send Message</button>
+            </form>
         </div>
+    </div>
     </section>
+
 
     <!-- Footer -->
     <footer class="site-footer">

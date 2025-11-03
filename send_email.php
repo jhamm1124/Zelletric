@@ -113,48 +113,55 @@ if (strlen($message) > 2000) {
     exit;
 }
 
-// Set recipient email for testing
-$to = 'jdhamm17@gmail.com';
+// Import PHPMailer classes
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
-// Sanitize service for subject
-$subject = 'New Contact Form Submission: ' . 
-    ($service ? preg_replace('/[^\w\s-]/', '', $service) : 'General Inquiry');
+// Include PHPMailer autoloader
+require 'vendor/autoload.php';
 
-// Build email content with proper escaping
-$email_content = "New Contact Form Submission\n\n";
-$email_content .= "Name: " . str_replace("\r\n", "\n", $name) . "\n";
-$email_content .= "Email: " . $email . "\n";
-$email_content .= "Phone: " . ($phone ? str_replace("\r\n", "\n", $phone) : 'Not provided') . "\n";
-$email_content .= "Service: " . str_replace("\r\n", "\n", $service) . "\n\n";
-$email_content .= "Message:\n" . str_replace("\r\n", "\n", $message) . "\n";
+// Create a new PHPMailer instance
+$mail = new PHPMailer(true);
 
-// Set secure headers
-$headers = [
-    'From' => 'Zellectric Contact Form <noreply@' . $_SERVER['HTTP_HOST'] . '>',
-    'Reply-To' => $email,
-    'X-Mailer' => 'PHP/' . phpversion(),
-    'MIME-Version' => '1.0',
-    'Content-Type' => 'text/plain; charset=UTF-8',
-    'X-AntiAbuse' => 'This is a contact form submission from ' . $_SERVER['HTTP_HOST']
-];
-
-// Convert headers to string
-$headers_string = '';
-foreach ($headers as $key => $value) {
-    $headers_string .= "$key: $value\r\n";}
-
-// Send email with error handling
 try {
-    $mailSent = mail($to, $subject, $email_content, $headers_string);
+    // Server settings
+    $mail->isSMTP();
+    $mail->Host = 'smtp.hostinger.com';
+    $mail->SMTPAuth = true;
+    $mail->Username = 'contact@zellectric.com';
+    $mail->Password = 'Zellectric2024!';
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+    $mail->Port = 465;
+
+    // Recipients
+    $mail->setFrom('contact@zellectric.com', 'Zellectric Contact Form');
+    $mail->addAddress('contact@zellectric.com'); // send to same inbox
+    $mail->addReplyTo($email, $name); // so replying goes to the visitor's email
+
+    // Sanitize service for subject
+    $subject = 'New Contact Form Submission: ' . 
+        ($service ? preg_replace('/[^\w\s-]/', '', $service) : 'General Inquiry');
+
+    // Build email content with proper escaping
+    $email_content = "New Contact Form Submission\n\n";
+    $email_content .= "Name: " . str_replace("\r\n", "\n", $name) . "\n";
+    $email_content .= "Email: " . $email . "\n";
+    $email_content .= "Phone: " . ($phone ? str_replace("\r\n", "\n", $phone) : 'Not provided') . "\n";
+    $email_content .= "Service: " . str_replace("\r\n", "\n", $service) . "\n\n";
+    $email_content .= "Message:\n" . str_replace("\r\n", "\n", $message) . "\n";
+
+    // Content
+    $mail->isHTML(false); // Set email format to plain text
+    $mail->Subject = $subject;
+    $mail->Body = $email_content;
+
+    // Send email
+    $mail->send();
     
-    if ($mailSent) {
-        echo json_encode([
-            'success' => true, 
-            'message' => 'Thank you! Your message has been sent.'
-        ]);
-    } else {
-        throw new Exception('Failed to send email');
-    }
+    echo json_encode([
+        'success' => true, 
+        'message' => 'Thank you! Your message has been sent.'
+    ]);
 } catch (Exception $e) {
     error_log('Email sending failed: ' . $e->getMessage());
     http_response_code(500);

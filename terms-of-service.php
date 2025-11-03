@@ -54,7 +54,7 @@
         <div class="header-container">
             <div class="logo-wrapper">
                 <a href="index.php" class="logo-link">
-                    <img src="Logo.png" alt="Zellectric Electrical Services" class="header-logo">
+                    <img src="images/Logo.png" alt="Zellectric Electrical Services" class="header-logo">
                 </a>
             </div>
             <a href="index.php" class="back-link"><i class="fas fa-arrow-left"></i> Back to Home</a>
@@ -86,7 +86,7 @@
         <p>Payment is due upon completion of work unless otherwise agreed in writing. We accept various forms of payment including cash, check, and many cash apps.</p>
         
         <h2>5. Warranties</h2>
-        <p>We stand behind our work with a 1-year labor warranty on all installations and repairs. Manufacturer warranties apply to parts and equipment.</p>
+        <p>We stand behind our work with a 1-year labor warranty on all installations and repairs. Manufacturer warranties may apply to parts and equipment.</p>
         
         <h2>6. Limitation of Liability</h2>
         <p>Zellectric shall not be liable for any indirect, incidental, special, or consequential damages resulting from the use or inability to use our services.</p>
