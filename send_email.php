@@ -12,10 +12,10 @@ header('X-XSS-Protection: 1; mode=block');
 header('Referrer-Policy: strict-origin-when-cross-origin');
 
 // -------------------------------
-// Rate Limiting (5 per 15 minutes)
+// Rate Limiting (2 per 10 minutes)
 // -------------------------------
-$rateLimitWindow = 900; // 15 minutes in seconds
-$maxRequests = 5;
+$rateLimitWindow = 600; // 10 minutes in seconds
+$maxRequests = 2;
 $ip = $_SERVER['REMOTE_ADDR'];
 $rateLimitKey = 'rate_limit_' . md5($ip);
 
@@ -28,8 +28,12 @@ if (!isset($_SESSION[$rateLimitKey])) {
 
 if ($_SESSION[$rateLimitKey]['count'] >= $maxRequests) {
     if (time() < $_SESSION[$rateLimitKey]['reset_time']) {
+        $timeLeft = ceil(($_SESSION[$rateLimitKey]['reset_time'] - time()) / 60);
         http_response_code(429);
-        echo json_encode(['success' => false, 'message' => 'Too many requests. Please try again later.']);
+        echo json_encode([
+            'success' => false, 
+            'message' => "You've reached the maximum number of submissions. Please wait {$timeLeft} minutes before trying again."
+        ]);
         exit;
     } else {
         $_SESSION[$rateLimitKey] = ['count' => 0, 'reset_time' => time() + $rateLimitWindow];

@@ -50,7 +50,13 @@
         <div class="hero-container">
             <div class="hero-content">
                 <h1>Professional Electrical Services You Can Trust</h1>
-                <p>6 Days a Week • New/Remodeling/Repairs • Free Estimates</p>
+                <p class="hero-bullets">
+                    <span class="bullet-point">6 Days a Week</span>
+                    <span class="bullet-separator">•</span>
+                    <span class="bullet-point">New/Remodeling/Repairs</span>
+                    <span class="bullet-separator">•</span>
+                    <span class="bullet-point">Free Estimates</span>
+                </p>
             </div>
         </div>
     </section>
@@ -125,6 +131,7 @@
     <div class="contact-container">
         <div class="contact-form">
             <h2>Contact Us</h2>
+            <div id="formStatus" class="form-status" style="display: none; margin-bottom: 20px; padding: 15px; border-radius: 5px; text-align: center;"></div>
             <form id="contactForm" method="POST" action="send_email.php" novalidate>
                 <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
 
@@ -152,6 +159,7 @@
                             <option value="residential">Residential Services</option>
                             <option value="lighting">Lighting Installation</option>
                             <option value="maintenance">Maintenance</option>
+                            <option value="ev_service">EV Charging Station Installation</option>
                         </select>
                     </div>
                 </div>
@@ -231,9 +239,83 @@
     <a href="#" id="back-to-top" aria-label="Back to top">
         <i class="fas fa-arrow-up"></i>
     </a>
+    <style>
+        .form-status.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .form-status.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .form-status.info {
+            background-color: #e2e3e5;
+            color: #383d41;
+            border: 1px solid #d6d8db;
+        }
+    </style>
     <script>
     // Mobile menu functionality
     document.addEventListener('DOMContentLoaded', function() {
+        // Form submission handling
+        const contactForm = document.getElementById('contactForm');
+        const formStatus = document.getElementById('formStatus');
+        
+        if (contactForm) {
+            contactForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                // Disable submit button and show loading state
+                const submitBtn = contactForm.querySelector('button[type="submit"]');
+                const originalBtnText = submitBtn.innerHTML;
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = 'Sending...';
+                
+                try {
+                    const formData = new FormData(contactForm);
+                    const response = await fetch('send_email.php', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        // Show success message
+                        formStatus.textContent = 'Thank you! Your message has been sent successfully. We will get back to you soon!';
+                        formStatus.className = 'form-status success';
+                        formStatus.style.display = 'block';
+                        
+                        // Clear the form
+                        contactForm.reset();
+                        
+                        // Hide success message after 10 seconds
+                        setTimeout(() => {
+                            formStatus.style.display = 'none';
+                        }, 10000);
+                    } else {
+                        // Show error message
+                        formStatus.textContent = result.message || 'There was an error sending your message. Please try again.';
+                        formStatus.className = 'form-status error';
+                        formStatus.style.display = 'block';
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    formStatus.textContent = 'An unexpected error occurred. Please try again later.';
+                    formStatus.className = 'form-status error';
+                    formStatus.style.display = 'block';
+                } finally {
+                    // Re-enable submit button
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalBtnText;
+                    
+                    // Scroll to the status message
+                    formStatus.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            });
+        }
         // Mobile menu elements
         const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
         const mainNav = document.querySelector('.main-nav');

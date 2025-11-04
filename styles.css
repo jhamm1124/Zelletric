@@ -324,7 +324,46 @@ body {
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-.hero p {
+.hero p.hero-bullets {
+    font-size: 1.25rem;
+    margin: 0 auto 2.5rem;
+    color: rgba(255, 255, 255, 0.9);
+    max-width: 800px;
+}
+
+.hero-bullets .bullet-point {
+    display: inline-block;
+    margin: 0 0.5rem;
+}
+
+.hero-bullets .bullet-separator {
+    display: inline-block;
+    margin: 0 0.25rem;
+    opacity: 0.7;
+}
+
+@media (max-width: 768px) {
+    .hero-bullets {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.25rem;
+    }
+    
+    .hero-bullets .bullet-point {
+        margin: 0.1rem 0;
+    }
+    
+    .hero-bullets .bullet-separator {
+        display: block;
+        margin: 0.1rem 0;
+        font-size: 1.5rem;
+        line-height: 0.5;
+        opacity: 0.6;
+    }
+}
+
+.hero p:not(.hero-bullets) {
     font-size: 1.25rem;
     margin-bottom: 2.5rem;
     color: rgba(255, 255, 255, 0.9);
