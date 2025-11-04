@@ -65,14 +65,13 @@
     <main class="legal-container">
         <h1>Privacy Policy</h1>
         
-        <p><em>Last Updated: October 29, 2025</em></p>
+        <p><em>Last Updated: November 2, 2025</em></p>
         
         <h2>1. Information We Collect</h2>
         <p>We may collect the following types of information when you use our services:</p>
         <ul>
             <li>Personal information (name, email, phone number, address)</li>
             <li>Service history and preferences</li>
-            <li>Payment information (processed securely through our payment processor)</li>
             <li>Website usage data through cookies and similar technologies</li>
         </ul>
         
@@ -103,7 +102,6 @@
             <li>Access your personal information</li>
             <li>Request correction of inaccurate data</li>
             <li>Request deletion of your data</li>
-            <li>Opt-out of marketing communications</li>
         </ul>
         
         <h2>6. Changes to This Policy</h2>
