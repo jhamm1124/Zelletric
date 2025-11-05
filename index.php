@@ -296,10 +296,15 @@
                             formStatus.style.display = 'none';
                         }, 10000);
                     } else {
-                        // Show error message
-                        formStatus.textContent = result.message || 'There was an error sending your message. Please try again.';
+                        // Show error message with potential countdown
+                        formStatus.innerHTML = result.message || 'There was an error sending your message. Please try again.';
                         formStatus.className = 'form-status error';
                         formStatus.style.display = 'block';
+                        
+                        // Start countdown if reset_time is provided
+                        if (result.reset_time) {
+                            startCountdown(formStatus, result.reset_time);
+                        }
                     }
                 } catch (error) {
                     console.error('Error:', error);
@@ -316,6 +321,45 @@
                 }
             });
         }
+        // Countdown function for rate limiting
+        function startCountdown(element, resetTime) {
+            const countdownElement = element.querySelector('.countdown');
+            if (!countdownElement) return;
+            
+            function updateCountdown() {
+                const now = Math.floor(Date.now() / 1000);
+                const timeLeft = Math.ceil((resetTime - now) / 60);
+                
+                if (timeLeft <= 0) {
+                    // Completely remove the error message when countdown is done
+                    element.remove();
+                    return;
+                }
+                
+                countdownElement.textContent = timeLeft;
+                
+                // Update every 30 seconds to reduce unnecessary updates
+                const nextUpdate = Math.min(30000, (resetTime * 1000) - Date.now());
+                if (nextUpdate > 0) {
+                    setTimeout(updateCountdown, nextUpdate);
+                }
+            }
+            
+            updateCountdown();
+            // Also update every minute for better accuracy
+            const interval = setInterval(updateCountdown, 60000);
+            
+            // Clean up interval when form is submitted again
+            const form = element.closest('form');
+            if (form) {
+                const originalSubmit = form.onsubmit;
+                form.onsubmit = function(e) {
+                    clearInterval(interval);
+                    if (originalSubmit) return originalSubmit.call(this, e);
+                };
+            }
+        }
+
         // Mobile menu elements
         const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
         const mainNav = document.querySelector('.main-nav');

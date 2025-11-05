@@ -28,11 +28,13 @@ if (!isset($_SESSION[$rateLimitKey])) {
 
 if ($_SESSION[$rateLimitKey]['count'] >= $maxRequests) {
     if (time() < $_SESSION[$rateLimitKey]['reset_time']) {
-        $timeLeft = ceil(($_SESSION[$rateLimitKey]['reset_time'] - time()) / 60);
+        $resetTime = $_SESSION[$rateLimitKey]['reset_time'];
+        $timeLeft = ceil(($resetTime - time()) / 60);
         http_response_code(429);
         echo json_encode([
             'success' => false, 
-            'message' => "You've reached the maximum number of submissions. Please wait {$timeLeft} minutes before trying again."
+            'message' => 'You\'ve reached the maximum number of submissions. Please wait <span class="countdown" data-reset="' . $resetTime . '">' . $timeLeft . '</span> minutes before trying again.',
+            'reset_time' => $resetTime
         ]);
         exit;
     } else {
@@ -128,20 +130,78 @@ try {
     $mail->addAddress($email_user);
     $mail->addReplyTo($email, $name);
 
-    // Email Subject & Body
+    // Email Subject
     $subject = 'New Contact Form Submission: ' . 
         ($service ? preg_replace('/[^\w\s-]/', '', $service) : 'General Inquiry');
 
-    $body = "New Contact Form Submission\n\n";
-    $body .= "Name: {$name}\n";
-    $body .= "Email: {$email}\n";
-    $body .= "Phone: " . ($phone ?: 'Not provided') . "\n";
-    $body .= "Service: " . ($service ?: 'Not specified') . "\n\n";
-    $body .= "Message:\n{$message}\n";
+    // HTML Email Body
+    $htmlBody = "
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <style>
+            body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; }
+            .header { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+            .details { margin: 20px 0; }
+            .detail-row { margin-bottom: 10px; }
+            .label { font-weight: bold; color: #2c3e50; }
+            .message { 
+                background-color: #f8f9fa; 
+                padding: 15px; 
+                border-left: 4px solid #3498db;
+                margin: 20px 0;
+            }
+            .footer { 
+                margin-top: 30px; 
+                font-size: 0.9em; 
+                color: #7f8c8d;
+                border-top: 1px solid #eee;
+                padding-top: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class='header'>
+            <h2>New Contact Form Submission</h2>
+            <p>" . date('F j, Y \a\t g:i a') . "</p>
+        </div>
+        
+        <div class='details'>
+            <div class='detail-row'><span class='label'>Name:</span> " . htmlspecialchars($name) . "</div>
+            <div class='detail-row'><span class='label'>Email:</span> <a href='mailto:" . htmlspecialchars($email) . "'>" . htmlspecialchars($email) . "</a></div>
+            <div class='detail-row'><span class='label'>Phone:</span> " . ($phone ? htmlspecialchars($phone) : 'Not provided') . "</div>
+            " . ($service ? "<div class='detail-row'><span class='label'>Service:</span> " . htmlspecialchars($service) . "</div>" : "") . "
+        </div>
+        
+        <div class='message'>
+            <div class='label'>Message:</div>
+            <div>" . nl2br(htmlspecialchars($message)) . "</div>
+        </div>
+        
+        <div class='footer'>
+            <p>This message was sent from the contact form on " . $_SERVER['HTTP_HOST'] . "</p>
+        </div>
+    </body>
+    </html>
+    ";
 
-    $mail->isHTML(false);
+    // Plain text version for email clients that don't support HTML
+    $textBody = "NEW CONTACT FORM SUBMISSION\n";
+    $textBody .= str_repeat("=", 30) . "\n\n";
+    $textBody .= "Date: " . date('F j, Y \a\t g:i a') . "\n";
+    $textBody .= "Name: " . $name . "\n";
+    $textBody .= "Email: " . $email . "\n";
+    $textBody .= "Phone: " . ($phone ?: 'Not provided') . "\n";
+    if ($service) {
+        $textBody .= "Service: " . $service . "\n";
+    }
+    $textBody .= "\nMESSAGE:\n" . str_repeat("-", 30) . "\n" . $message . "\n\n";
+    $textBody .= "This message was sent from the contact form on " . $_SERVER['HTTP_HOST'] . "\n";
+
+    $mail->isHTML(true);
     $mail->Subject = $subject;
-    $mail->Body = $body;
+    $mail->Body = $htmlBody;
+    $mail->AltBody = $textBody;
 
     // Send the email
     $mail->send();
