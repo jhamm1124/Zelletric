@@ -137,11 +137,11 @@
 
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="name">Your Name <span class="required">*</span></label>
+                        <label for="name">Your Name</label>
                         <input type="text" id="name" name="name" placeholder="your name" required>
                     </div>
                     <div class="form-group">
-                        <label for="email">Your Email <span class="required">*</span></label>
+                        <label for="email">Your Email</label>
                         <input type="email" id="email" name="email" placeholder="your email" required>
                     </div>
                 </div>
@@ -154,7 +154,7 @@
                     <div class="form-group">
                         <label for="service">Service Needed</label>
                         <select id="service" name="service" required>
-                            <option value="" selected disabled>Select a service...</option>
+                            <option value="">Select a Service</option>
                             <option value="repairs">Electrical Repairs</option>
                             <option value="residential">Residential Services</option>
                             <option value="lighting">Lighting Installation</option>
@@ -165,7 +165,7 @@
                 </div>
 
                 <div class="form-group full-width">
-                    <label for="message">How can we help you? <span class="required">*</span></label>
+                    <label for="message">How can we help you?</label>
                     <textarea id="message" name="message" rows="4" placeholder="your message" required></textarea>
                 </div>
 
@@ -482,6 +482,7 @@
         setupNavigationLink('a[href^="#"]');
     });
 
-        <script src="script.js"></script>
+        
+    </script>
 </body>
 </html>
