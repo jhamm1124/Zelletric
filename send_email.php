@@ -7,6 +7,9 @@
 session_start();
 header('Content-Type: application/json');
 header('X-Content-Type-Options: nosniff');
+
+// Set the default timezone to Eastern Time (America/New_York)
+date_default_timezone_set('America/New_York');
 header('X-Frame-Options: DENY');
 header('X-XSS-Protection: 1; mode=block');
 header('Referrer-Policy: strict-origin-when-cross-origin');
@@ -19,17 +22,20 @@ $maxRequests = 2;
 $ip = $_SERVER['REMOTE_ADDR'];
 $rateLimitKey = 'rate_limit_' . md5($ip);
 
-if (!isset($_SESSION[$rateLimitKey])) {
+// Check if rate limit has expired or doesn't exist
+$currentTime = time();
+if (!isset($_SESSION[$rateLimitKey]) || $currentTime >= $_SESSION[$rateLimitKey]['reset_time']) {
+    // Reset the counter if the time window has passed
     $_SESSION[$rateLimitKey] = [
-        'count' => 0,
-        'reset_time' => time() + $rateLimitWindow
+        'count' => 1,
+        'reset_time' => $currentTime + $rateLimitWindow
     ];
-}
-
-if ($_SESSION[$rateLimitKey]['count'] >= $maxRequests) {
-    if (time() < $_SESSION[$rateLimitKey]['reset_time']) {
+} else {
+    // Check if we've hit the rate limit
+    if ($_SESSION[$rateLimitKey]['count'] >= $maxRequests) {
         $resetTime = $_SESSION[$rateLimitKey]['reset_time'];
-        $timeLeft = ceil(($resetTime - time()) / 60);
+        $timeLeft = ceil(($resetTime - $currentTime) / 60);
+        
         http_response_code(429);
         echo json_encode([
             'success' => false, 
@@ -37,11 +43,11 @@ if ($_SESSION[$rateLimitKey]['count'] >= $maxRequests) {
             'reset_time' => $resetTime
         ]);
         exit;
-    } else {
-        $_SESSION[$rateLimitKey] = ['count' => 0, 'reset_time' => time() + $rateLimitWindow];
     }
+    
+    // Increment the counter if within limits
+    $_SESSION[$rateLimitKey]['count']++;
 }
-$_SESSION[$rateLimitKey]['count']++;
 
 // -------------------------------
 // CSRF Token Check (optional)
@@ -163,7 +169,7 @@ try {
     <body>
         <div class='header'>
             <h2>New Contact Form Submission</h2>
-            <p>" . date('F j, Y \a\t g:i a') . "</p>
+            <p>" . date('F j, Y \a\t g:i a T') . "</p>
         </div>
         
         <div class='details'>
@@ -188,7 +194,7 @@ try {
     // Plain text version for email clients that don't support HTML
     $textBody = "NEW CONTACT FORM SUBMISSION\n";
     $textBody .= str_repeat("=", 30) . "\n\n";
-    $textBody .= "Date: " . date('F j, Y \a\t g:i a') . "\n";
+    $textBody .= "Date: " . date('F j, Y \a\t g:i a T') . "\n";
     $textBody .= "Name: " . $name . "\n";
     $textBody .= "Email: " . $email . "\n";
     $textBody .= "Phone: " . ($phone ?: 'Not provided') . "\n";
