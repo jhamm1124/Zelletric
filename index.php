@@ -137,12 +137,12 @@
 
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="name">Your Name</label>
-                        <input type="text" id="name" name="name" placeholder="your name" required>
+                        <label for="name">Your Name <span style="color: #ff4444; font-weight: bold; margin-left: 3px;">*</span></label>
+                        <input type="text" id="name" name="name" placeholder="your name" required aria-required="true">
                     </div>
                     <div class="form-group">
-                        <label for="email">Your Email</label>
-                        <input type="email" id="email" name="email" placeholder="your email" required>
+                        <label for="email">Your Email <span style="color: #ff4444; font-weight: bold; margin-left: 3px;">*</span></label>
+                        <input type="email" id="email" name="email" placeholder="your email" required aria-required="true">
                     </div>
                 </div>
 
@@ -165,8 +165,8 @@
                 </div>
 
                 <div class="form-group full-width">
-                    <label for="message">How can we help you?</label>
-                    <textarea id="message" name="message" rows="4" placeholder="your message" required></textarea>
+                    <label for="message">How can we help you? <span style="color: #ff4444; font-weight: bold; margin-left: 3px;">*</span></label>
+                    <textarea id="message" name="message" rows="4" placeholder="your message" required aria-required="true"></textarea>
                 </div>
 
                 <button type="submit" class="cta-button">Send Message</button>
@@ -262,6 +262,14 @@
         // Form submission handling
         const contactForm = document.getElementById('contactForm');
         const formStatus = document.getElementById('formStatus');
+        let countdownInterval = null;
+        
+        // Function to update form state
+        function updateFormState(isEnabled) {
+            const submitBtn = contactForm.querySelector('button[type="submit"]');
+            submitBtn.disabled = !isEnabled;
+            submitBtn.innerHTML = isEnabled ? 'Send Message' : 'Sending...';
+        }
         
         if (contactForm) {
             contactForm.addEventListener('submit', async function(e) {
@@ -303,6 +311,10 @@
                         
                         // Start countdown if reset_time is provided
                         if (result.reset_time) {
+                            // Clear any existing countdown
+                            if (countdownInterval) {
+                                clearInterval(countdownInterval);
+                            }
                             startCountdown(formStatus, result.reset_time);
                         }
                     }
@@ -312,9 +324,10 @@
                     formStatus.className = 'form-status error';
                     formStatus.style.display = 'block';
                 } finally {
-                    // Re-enable submit button
-                    submitBtn.disabled = false;
-                    submitBtn.innerHTML = originalBtnText;
+                    // Re-enable submit button if not rate limited
+                    if (!countdownInterval) {
+                        updateFormState(true);
+                    }
                     
                     // Scroll to the status message
                     formStatus.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -326,35 +339,94 @@
             const countdownElement = element.querySelector('.countdown');
             if (!countdownElement) return;
             
+            // Make sure the element is visible and stays that way
+            element.style.display = 'block';
+            element.style.opacity = '1';
+            element.style.visibility = 'visible';
+            
+            // Clear any existing interval
+            if (countdownInterval) {
+                clearInterval(countdownInterval);
+                countdownInterval = null;
+            }
+            
+            // Disable form submission while countdown is active
+            const submitBtn = document.querySelector('#contactForm button[type="submit"]');
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = 'Please wait...';
+            }
+            
+            // Function to update the countdown display
             function updateCountdown() {
                 const now = Math.floor(Date.now() / 1000);
-                const timeLeft = Math.ceil((resetTime - now) / 60);
+                const timeLeft = resetTime - now;
+                const minutesLeft = Math.max(1, Math.ceil(timeLeft / 60)); // Ensure at least 1 minute is shown
+                
+                // Always keep the element visible
+                element.style.display = 'block';
+                element.style.opacity = '1';
+                element.style.visibility = 'visible';
                 
                 if (timeLeft <= 0) {
-                    // Completely remove the error message when countdown is done
-                    element.remove();
+                    // Update the message when countdown is done
+                    element.innerHTML = 'You can now submit the form again.';
+                    element.className = 'form-status success';
+                    
+                    // Clear the interval
+                    if (countdownInterval) {
+                        clearInterval(countdownInterval);
+                        countdownInterval = null;
+                    }
+                    
+                    // Re-enable form submission
+                    if (submitBtn) {
+                        submitBtn.disabled = false;
+                        submitBtn.innerHTML = 'Send Message';
+                    }
+                    
+                    // Auto-hide the message after 5 seconds
+                    setTimeout(() => {
+                        element.style.display = 'none';
+                    }, 5000);
+                    
                     return;
                 }
                 
-                countdownElement.textContent = timeLeft;
+                // Update the countdown display
+                if (countdownElement) {
+                    countdownElement.textContent = minutesLeft;
+                }
                 
-                // Update every 30 seconds to reduce unnecessary updates
-                const nextUpdate = Math.min(30000, (resetTime * 1000) - Date.now());
+                // Update more frequently as we get closer to 0
+                const nextUpdate = Math.min(1000, timeLeft * 1000);
                 if (nextUpdate > 0) {
                     setTimeout(updateCountdown, nextUpdate);
                 }
             }
             
+            // Initial update
             updateCountdown();
-            // Also update every minute for better accuracy
-            const interval = setInterval(updateCountdown, 60000);
+            
+            // Set up interval for regular updates
+            countdownInterval = setInterval(updateCountdown, 30000);
+            
+            // Store the current countdown state
+            window.currentCountdown = {
+                element: element,
+                resetTime: resetTime,
+                update: updateCountdown
+            };
             
             // Clean up interval when form is submitted again
             const form = element.closest('form');
             if (form) {
                 const originalSubmit = form.onsubmit;
                 form.onsubmit = function(e) {
-                    clearInterval(interval);
+                    if (countdownInterval) {
+                        clearInterval(countdownInterval);
+                        countdownInterval = null;
+                    }
                     if (originalSubmit) return originalSubmit.call(this, e);
                 };
             }
