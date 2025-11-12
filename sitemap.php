@@ -142,21 +142,6 @@
                 </a>
             </div>
         </div>
-        
-        <div class="sitemap-section">
-            <h2>Contact Information</h2>
-            <div class="sitemap-links">
-                <a href="tel:7174620764">
-                    <i class="fas fa-phone"></i> (717) 462-0764
-                </a>
-                <a href="mailto:contact@zellectric.com">
-                    <i class="fas fa-envelope"></i> contact@zellectric.com
-                </a>
-                <a href="#" onclick="alert('Our business hours are Monday-Friday: 3:00 PM - 8:00 PM')">
-                    <i class="far fa-clock"></i> Business Hours
-                </a>
-            </div>
-        </div>
     </main>
 
     <!-- Footer -->

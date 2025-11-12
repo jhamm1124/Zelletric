@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-D1MDCCZDKS"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-D1MDCCZDKS');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Professional electrical services for residential and commercial properties. 24/7 emergency service available.">
@@ -72,7 +80,7 @@
             <div class="service-card">
                 <i class="fas fa-bolt"></i>
                 <h3>Electrical Repairs & Maintenance</h3>
-                <p>Expert troubleshooting and repair services for all your electrical needs. We fix everything from flickering lights to circuit breakers, ensuring your home's electrical system is safe and efficient. Includes comprehensive maintenance to prevent future issues.</p>
+                <p>Expert troubleshooting and repair services for all your electrical needs. We fix everything from flickering lights to faulty circuit breakers, ensuring your home's electrical system is safe and efficient. Includes comprehensive maintenance to prevent future issues.</p>
             </div>
             <div class="service-card">
                 <i class="fas fa-home"></i>
@@ -178,51 +186,7 @@
 
     <!-- Footer -->
     <footer class="site-footer">
-        <div class="footer-content">
-            
-            <div class="footer-section">
-                <h4>Quick Links</h4>
-                <ul class="footer-links">
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#services">Services</a></li>
-                    <li><a href="#about">About Us</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </div>
-            
-            <!-- <div class="footer-section">
-                <h4>Our Services</h4>
-                <ul class="footer-links">
-                    <li><a href="#" class="no-hover">Electrical Repairs</a></li>
-                    <li><a href="#" class="no-hover">Residential Wiring</a></li>
-                    <li><a href="#" class="no-hover">Lighting Installation</a></li>
-                </ul>
-            </div> -->
-            
-            <div class="footer-section">
-                <h4>Contact Info</h4>
-                <ul class="contact-info">
-                    <li><i class="fas fa-map-marker-alt"></i> Dillsburg, PA 17019</li>
-                    <li><i class="fas fa-phone"></i> <a href="tel:+7174620764">(717) 462-0764</a></li>
-                    <li><i class="fas fa-envelope"></i> <a href="mailto:contact@zellectric.com">contact@zellectric.com</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-section">
-                <h4>Zellectric</h4>
-                <p class="footer-about">Your trusted partner for all electrical needs. Providing professional, reliable, and affordable electrical services since 2025.</p>
-                <!-- <div class="social-links">
-                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                </div> -->
-            </div>
-
-        </div>
-        
-        <div class="footer-bottom">
-            <div class="footer-container">
+        <div class="footer-container">
                 <p>&copy; 2025 Zellectric. All Rights Reserved.</p>
                 <div class="footer-legal">
                     <a href="privacy-policy.php">Privacy Policy</a>
@@ -231,8 +195,8 @@
                     <span>|</span>
                     <a href="sitemap.php">Sitemap</a>
                 </div>
+                </br>
             </div>
-        </div>
     </footer>
 
     <!-- Back to Top Button -->
