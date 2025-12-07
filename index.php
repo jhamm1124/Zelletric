@@ -10,6 +10,7 @@
         gtag('config', 'G-D1MDCCZDKS');
     </script>
     <meta charset="UTF-8">
+    <meta name="robots" content="index, follow">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Professional electrical services for residential and commercial properties. 24/7 emergency service available.">
     <title>Zellectric | Professional Electrical Services</title>
