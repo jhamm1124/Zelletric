@@ -13,8 +13,15 @@
     <meta name="robots" content="index, follow">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Professional electrical services for residential and commercial properties. 24/7 emergency service available.">
-    <title>Zellectric | Professional Electrical Services</title>
-    <?php
+    <title>Zellectric LLC | Professional Electrical Services</title>
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://zellectric.com/">
+    <meta property="og:title" content="Zellectric LLC | Professional Electrical Services">
+    <meta property="og:description" content="Professional electrical services for residential and commercial properties. 24/7 emergency service available.">
+    <meta property="og:image" content="https://zellectral.com/images/Lightbulb.png">
+    
     // Start session and generate CSRF token if it doesn't exist
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
@@ -37,7 +44,7 @@
         <div class="header-container">
             <div class="logo-wrapper">
                 <a href="index.php" class="logo-link">
-                    <img src="images/Logo.png" alt="Zellectric Electrical Services" class="header-logo">
+                    <img src="images/Logo.png" alt="Zellectric LLC Electrical Services" class="header-logo">
                 </a>
             </div>
             <nav class="main-nav">
@@ -188,7 +195,7 @@
     <!-- Footer -->
     <footer class="site-footer">
         <div class="footer-container">
-                <p>&copy; 2025 Zellectric. All Rights Reserved.</p>
+                <p>&copy; 2025 Zellectric LLC. All Rights Reserved.</p>
                 <div class="footer-legal">
                     <a href="privacy-policy.php">Privacy Policy</a>
                     <span>|</span>
