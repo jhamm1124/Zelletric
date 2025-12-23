@@ -48,7 +48,7 @@
                     <li><a href="#contact" class="nav-link">Contact Us</a></li>
                 </ul>
             </nav>
-            <div class="mobile-menu-toggle">
+            <div class="mobile-menu-toggle" style="display: none !important;">
                 <i class="fas fa-bars"></i>
             </div>
         </div>
