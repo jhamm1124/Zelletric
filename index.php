@@ -22,6 +22,7 @@
     <meta property="og:description" content="Professional electrical services for residential and commercial properties. 24/7 emergency service available.">
     <meta property="og:image" content="https://zellectral.com/images/Lightbulb.png">
     
+    <?php
     // Start session and generate CSRF token if it doesn't exist
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
