@@ -20,7 +20,7 @@
     <meta property="og:url" content="https://zellectric.com/">
     <meta property="og:title" content="Zellectric LLC | Professional Electrical Services">
     <meta property="og:description" content="Professional electrical services for residential and commercial properties. 24/7 emergency service available.">
-    <meta property="og:image" content="https://zellectral.com/images/Lightbulb.png">
+    <meta property="og:image" content="https://zellectric.com/images/Lightbulb.png">
     
     <?php
     // Start session and generate CSRF token if it doesn't exist
