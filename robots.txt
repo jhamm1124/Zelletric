@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://zellectric.com/sitemap.xml
+
+# Disallow admin areas or other sensitive directories
+Disallow: /vendor/
+Disallow: /config.php
+Disallow: /test_email.php
+Disallow: /send_email.php

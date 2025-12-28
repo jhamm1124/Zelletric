@@ -7,9 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="images/Lightbulb.png">
-    <link rel="apple-touch-icon" href="images/Lightbulb.png">
-    <link rel="shortcut icon" href="images/Lightbulb.png" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" sizes="any">
     <style>
         .legal-container {
             max-width: 1000px;
