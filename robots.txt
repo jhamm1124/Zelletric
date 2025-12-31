@@ -1,10 +1,22 @@
+# Robots.txt for Zellectric
 User-agent: *
 Allow: /
 
-Sitemap: https://zellectric.com/sitemap.xml
-
-# Disallow admin areas or other sensitive directories
+# Block sensitive files and tools
 Disallow: /vendor/
+Disallow: /includes/
+Disallow: /templates_c/
+Disallow: /cache/
 Disallow: /config.php
 Disallow: /test_email.php
 Disallow: /send_email.php
+Disallow: /check_links.php
+Disallow: /*.log$
+Disallow: /*.env$
+Disallow: /*.sql$
+
+# Sitemap
+Sitemap: https://www.zellectric.com/sitemap.xml
+
+# Canonical host (Bing only)
+Host: www.zellectric.com
