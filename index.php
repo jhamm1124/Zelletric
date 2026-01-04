@@ -15,6 +15,11 @@
     <meta name="description" content="Professional electrical services for residential and commercial properties. 24/7 emergency service available.">
     <title>Zellectric LLC | Professional Electrical Services</title>
     
+    <!-- Prevent caching -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://zellectric.com/">

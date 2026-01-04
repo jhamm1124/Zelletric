@@ -208,7 +208,6 @@ body {
 .header-logo {
     height: 75px;
     width: 300px;
-    transition: var(--transition);
 }
 
 .company-name {
