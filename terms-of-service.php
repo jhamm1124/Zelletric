@@ -107,7 +107,7 @@
     <footer class="site-footer">
         <div class="footer-bottom">
             <div class="footer-container">
-                <p>&copy; 2025 Zellectric. All Rights Reserved.</p>
+                <p>&copy; 2026 Zellectric. All Rights Reserved.</p>
                 <div class="footer-legal">
                     <a href="privacy-policy.php">Privacy Policy</a>
                     <span>|</span>

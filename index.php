@@ -37,8 +37,122 @@
     }
     ?>
     <meta name="csrf-token" content="<?php echo htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8'); ?>">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="styles.css?v=1.1">
+    
+    <!-- Preload and async load Font Awesome -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"></noscript>
+    
+    <!-- Preload and async load main styles -->
+    <link rel="preload" href="styles.css?v=1.1" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="styles.css?v=1.1"></noscript>
+    
+    <!-- Critical CSS Inlined -->
+    <style>
+    /* Critical CSS for above-the-fold content */
+    :root {
+        --primary-color: #1a365d;
+        --primary-dark: #0f2942;
+        --text-light: #f9fafb;
+        --accent-color: #f59e0b;
+    }
+    
+    body {
+        font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.7;
+        color: #1f2937;
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+    }
+    
+    .site-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background-color: white;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        z-index: 1000;
+    }
+    
+    .header-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 5% 1rem 2%;
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+    
+    .logo-link {
+        display: block;
+        line-height: 0;
+    }
+    
+    .header-logo {
+        width: 300px;
+        height: 75px;
+    }
+    
+    .main-nav {
+        display: flex;
+    }
+    
+    .nav-list {
+        display: flex;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .nav-link {
+        color: #1f2937;
+        text-decoration: none;
+        font-weight: 500;
+        padding: 0.5rem 1rem;
+        transition: color 0.3s ease;
+    }
+    
+    .hero {
+        margin-top: 80px;
+        padding: 6rem 5%;
+        background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('images/hero-bg.jpg') center/cover no-repeat;
+        color: white;
+        text-align: center;
+    }
+    
+    .hero h1 {
+        font-size: 2.5rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .hero-bullets {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+    
+    .bullet-point {
+        display: inline-flex;
+        align-items: center;
+    }
+    
+    .bullet-separator {
+        margin: 0 0.5rem;
+        color: var(--accent-color);
+    }
+    
+    /* Font face with font-display: swap */
+    @font-face {
+        font-family: 'Font Awesome 6 Free';
+        font-style: normal;
+        font-weight: 900;
+        font-display: swap;
+        src: url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/webfonts/fa-solid-900.woff2') format('woff2');
+    }
+    </style>
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="images/Lightbulb.png">
     <link rel="apple-touch-icon" href="images/Lightbulb.png">
@@ -160,11 +274,11 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label for="name">Your Name <span style="color: #ff4444; font-weight: bold; margin-left: 3px;">*</span></label>
-                        <input type="text" id="name" name="name" placeholder="your name" required aria-required="true">
+                        <input type="text" id="name" name="name" placeholder="Your name" required aria-required="true">
                     </div>
                     <div class="form-group">
                         <label for="email">Your Email <span style="color: #ff4444; font-weight: bold; margin-left: 3px;">*</span></label>
-                        <input type="email" id="email" name="email" placeholder="your email" required aria-required="true">
+                        <input type="email" id="email" name="email" placeholder="Your email" required aria-required="true">
                     </div>
                 </div>
 
@@ -188,7 +302,7 @@
 
                 <div class="form-group full-width">
                     <label for="message">How can we help you? <span style="color: #ff4444; font-weight: bold; margin-left: 3px;">*</span></label>
-                    <textarea id="message" name="message" rows="4" placeholder="your message" required aria-required="true"></textarea>
+                    <textarea id="message" name="message" rows="4" placeholder="Your message" required aria-required="true" style="font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"></textarea>
                 </div>
 
                 <button type="submit" class="cta-button">Send Message</button>
@@ -201,7 +315,7 @@
     <!-- Footer -->
     <footer class="site-footer">
         <div class="footer-container">
-                <p>&copy; 2025 Zellectric LLC. All Rights Reserved.</p>
+                <p>&copy; 2026 Zellectric LLC. All Rights Reserved.</p>
                 <div class="footer-legal">
                     <a href="privacy-policy.php">Privacy Policy</a>
                     <span>|</span>
