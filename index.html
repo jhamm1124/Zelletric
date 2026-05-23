@@ -359,10 +359,9 @@
                 const result = await response.json();
                 
                 if (response.ok) {
-                    formStatus.textContent = 'Message sent successfully! We\'ll get back to you soon.';
-                    formStatus.style.backgroundColor = '#10b981';
-                    formStatus.style.color = 'white';
                     this.reset();
+                    formStatus.style.display = 'none';
+                    showThankYouModal();
                 } else {
                     throw new Error(result.message || 'Failed to send message');
                 }
