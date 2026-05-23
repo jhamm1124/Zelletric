@@ -27,17 +27,6 @@
     <meta property="og:description" content="Professional electrical services for residential and commercial properties. 24/7 emergency service available.">
     <meta property="og:image" content="https://zellectric.com/images/Lightbulb.png">
     
-    <?php
-    // Start session and generate CSRF token if it doesn't exist
-    if (session_status() === PHP_SESSION_NONE) {
-        session_start();
-    }
-    if (!isset($_SESSION['csrf_token'])) {
-        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-    }
-    ?>
-    <meta name="csrf-token" content="<?php echo htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8'); ?>">
-    
     <!-- Preload and async load Font Awesome -->
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"></noscript>
@@ -73,25 +62,21 @@
         background-color: white;
         box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         z-index: 1000;
+        border-bottom: 3px solid #facc15;
     }
     
     .header-container {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 1rem 5% 1rem 2%;
+        padding: 0.925rem 5% 0.925rem 2%;
         max-width: 1400px;
         margin: 0 auto;
     }
-    
-    .logo-link {
-        display: block;
-        line-height: 0;
-    }
-    
+
     .header-logo {
-        width: 300px;
-        height: 75px;
+        width: 292.5px;
+        height: 73.125px;
     }
     
     .main-nav {
@@ -114,7 +99,7 @@
     }
     
     .hero {
-        margin-top: 80px;
+        margin-top: 77.5px;
         padding: 6rem 5%;
         background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('images/hero-bg.jpg') center/cover no-repeat;
         color: white;
@@ -163,7 +148,7 @@
     <header class="site-header">
         <div class="header-container">
             <div class="logo-wrapper">
-                <a href="index.php" class="logo-link">
+                <a href="index.html" class="logo-link">
                     <img src="images/Logo.png" alt="Zellectric LLC Electrical Services" class="header-logo">
                 </a>
             </div>
@@ -268,9 +253,7 @@
         <div class="contact-form">
             <h2>Contact Us</h2>
             <div id="formStatus" class="form-status" style="display: none; margin-bottom: 20px; padding: 15px; border-radius: 5px; text-align: center;"></div>
-            <form id="contactForm" method="POST" action="send_email.php" novalidate>
-                <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
-
+            <form id="contactForm" novalidate>
                 <div class="form-row">
                     <div class="form-group">
                         <label for="name">Your Name <span style="color: #ff4444; font-weight: bold; margin-left: 3px;">*</span></label>
@@ -311,282 +294,89 @@
     </div>
     </section>
 
-
     <!-- Footer -->
     <footer class="site-footer">
         <div class="footer-container">
                 <p>&copy; 2026 Zellectric LLC. All Rights Reserved.</p>
                 <div class="footer-legal">
-                    <a href="privacy-policy.php">Privacy Policy</a>
+                    <a href="privacy-policy.html">Privacy Policy</a>
                     <span>|</span>
-                    <a href="terms-of-service.php">Terms of Service</a>
+                    <a href="terms-of-service.html">Terms of Service</a>
                     <span>|</span>
-                    <a href="sitemap.php">Sitemap</a>
+                    <a href="sitemap.html">Sitemap</a>
                 </div>
                 </br>
             </div>
     </footer>
 
-    <!-- Back to Top Button -->
-    <a href="#" id="back-to-top" aria-label="Back to top">
-        <i class="fas fa-arrow-up"></i>
-    </a>
-    <style>
-        .form-status.success {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-        .form-status.error {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-        .form-status.info {
-            background-color: #e2e3e5;
-            color: #383d41;
-            border: 1px solid #d6d8db;
-        }
-    </style>
+    <!-- JavaScript for smooth scrolling and form handling -->
     <script>
-    // Mobile menu functionality
-    document.addEventListener('DOMContentLoaded', function() {
-        // Form submission handling
-        const contactForm = document.getElementById('contactForm');
-        const formStatus = document.getElementById('formStatus');
-        let countdownInterval = null;
-        
-        // Function to update form state
-        function updateFormState(isEnabled) {
-            const submitBtn = contactForm.querySelector('button[type="submit"]');
-            submitBtn.disabled = !isEnabled;
-            submitBtn.innerHTML = isEnabled ? 'Send Message' : 'Sending...';
-        }
-        
-        if (contactForm) {
-            contactForm.addEventListener('submit', async function(e) {
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                
-                // Disable submit button and show loading state
-                const submitBtn = contactForm.querySelector('button[type="submit"]');
-                const originalBtnText = submitBtn.innerHTML;
-                submitBtn.disabled = true;
-                submitBtn.innerHTML = 'Sending...';
-                
-                try {
-                    const formData = new FormData(contactForm);
-                    const response = await fetch('send_email.php', {
-                        method: 'POST',
-                        body: formData
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
                     });
-                    
-                    const result = await response.json();
-                    
-                    if (result.success) {
-                        // Show success message
-                        formStatus.textContent = 'Thank you! Your message has been sent successfully. We will get back to you soon!';
-                        formStatus.className = 'form-status success';
-                        formStatus.style.display = 'block';
-                        
-                        // Clear the form
-                        contactForm.reset();
-                        
-                        // Hide success message after 10 seconds
-                        setTimeout(() => {
-                            formStatus.style.display = 'none';
-                        }, 10000);
-                    } else {
-                        // Show error message with potential countdown
-                        formStatus.innerHTML = result.message || 'There was an error sending your message. Please try again.';
-                        formStatus.className = 'form-status error';
-                        formStatus.style.display = 'block';
-                        
-                        // Start countdown if reset_time is provided
-                        if (result.reset_time) {
-                            // Clear any existing countdown
-                            if (countdownInterval) {
-                                clearInterval(countdownInterval);
-                            }
-                            startCountdown(formStatus, result.reset_time);
-                        }
-                    }
-                } catch (error) {
-                    console.error('Error:', error);
-                    formStatus.textContent = 'An unexpected error occurred. Please try again later.';
-                    formStatus.className = 'form-status error';
-                    formStatus.style.display = 'block';
-                } finally {
-                    // Re-enable submit button if not rate limited
-                    if (!countdownInterval) {
-                        updateFormState(true);
-                    }
-                    
-                    // Scroll to the status message
-                    formStatus.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 }
             });
-        }
-        // Countdown function for rate limiting
-        function startCountdown(element, resetTime) {
-            const countdownElement = element.querySelector('.countdown');
-            if (!countdownElement) return;
-            
-            // Make sure the element is visible and stays that way
-            element.style.display = 'block';
-            element.style.opacity = '1';
-            element.style.visibility = 'visible';
-            
-            // Clear any existing interval
-            if (countdownInterval) {
-                clearInterval(countdownInterval);
-                countdownInterval = null;
-            }
-            
-            // Disable form submission while countdown is active
-            const submitBtn = document.querySelector('#contactForm button[type="submit"]');
-            if (submitBtn) {
-                submitBtn.disabled = true;
-                submitBtn.innerHTML = 'Please wait...';
-            }
-            
-            // Function to update the countdown display
-            function updateCountdown() {
-                const now = Math.floor(Date.now() / 1000);
-                const timeLeft = resetTime - now;
-                const minutesLeft = Math.max(1, Math.ceil(timeLeft / 60)); // Ensure at least 1 minute is shown
-                
-                // Always keep the element visible
-                element.style.display = 'block';
-                element.style.opacity = '1';
-                element.style.visibility = 'visible';
-                
-                if (timeLeft <= 0) {
-                    // Update the message when countdown is done
-                    element.innerHTML = 'You can now submit the form again.';
-                    element.className = 'form-status success';
-                    
-                    // Clear the interval
-                    if (countdownInterval) {
-                        clearInterval(countdownInterval);
-                        countdownInterval = null;
-                    }
-                    
-                    // Re-enable form submission
-                    if (submitBtn) {
-                        submitBtn.disabled = false;
-                        submitBtn.innerHTML = 'Send Message';
-                    }
-                    
-                    // Auto-hide the message after 5 seconds
-                    setTimeout(() => {
-                        element.style.display = 'none';
-                    }, 5000);
-                    
-                    return;
-                }
-                
-                // Update the countdown display
-                if (countdownElement) {
-                    countdownElement.textContent = minutesLeft;
-                }
-                
-                // Update more frequently as we get closer to 0
-                const nextUpdate = Math.min(1000, timeLeft * 1000);
-                if (nextUpdate > 0) {
-                    setTimeout(updateCountdown, nextUpdate);
-                }
-            }
-            
-            // Initial update
-            updateCountdown();
-            
-            // Set up interval for regular updates
-            countdownInterval = setInterval(updateCountdown, 30000);
-            
-            // Store the current countdown state
-            window.currentCountdown = {
-                element: element,
-                resetTime: resetTime,
-                update: updateCountdown
-            };
-            
-            // Clean up interval when form is submitted again
-            const form = element.closest('form');
-            if (form) {
-                const originalSubmit = form.onsubmit;
-                form.onsubmit = function(e) {
-                    if (countdownInterval) {
-                        clearInterval(countdownInterval);
-                        countdownInterval = null;
-                    }
-                    if (originalSubmit) return originalSubmit.call(this, e);
-                };
-            }
-        }
+        });
 
-        // Mobile menu elements
-        const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
-        const mainNav = document.querySelector('.main-nav');
-        const navLinks = document.querySelectorAll('.nav-link');
-        const menuIcon = mobileMenuToggle.querySelector('i');
-        let isMenuOpen = false;
-        
-        // Toggle menu function
-        function toggleMenu() {
-            isMenuOpen = !isMenuOpen;
+        // Form submission handler
+        document.getElementById('contactForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
             
-            // Toggle menu visibility
-            if (isMenuOpen) {
-                mainNav.classList.add('active');
-                document.body.style.overflow = 'hidden';
-                menuIcon.className = 'fas fa-times';
-            } else {
-                mainNav.classList.remove('active');
-                document.body.style.overflow = 'auto';
-                menuIcon.className = 'fas fa-bars';
-            }
-        }
-        
-        // Toggle menu when clicking the hamburger icon
-        mobileMenuToggle.addEventListener('click', function(e) {
-            e.stopPropagation();
-            toggleMenu();
-        });
-        
-        // Close menu when clicking outside
-        document.addEventListener('click', function(e) {
-            if (isMenuOpen && !mainNav.contains(e.target) && e.target !== mobileMenuToggle) {
-                toggleMenu();
-            }
-        });
-        
-        // Close menu when clicking on a nav link
-        navLinks.forEach(link => {
-            link.addEventListener('click', function() {
-                if (window.innerWidth <= 768) {
-                    toggleMenu();
+            const formStatus = document.getElementById('formStatus');
+            const submitButton = this.querySelector('button[type="submit"]');
+            
+            // Show loading state
+            submitButton.disabled = true;
+            submitButton.textContent = 'Sending...';
+            formStatus.style.display = 'block';
+            formStatus.className = 'form-status';
+            formStatus.textContent = 'Sending your message...';
+            formStatus.style.backgroundColor = '#f0f9ff';
+            formStatus.style.color = '#0369a1';
+            
+            // Collect form data
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+            
+            try {
+                // This will be replaced with Cloudflare Worker endpoint
+                const response = await fetch('/functions/contact', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok) {
+                    formStatus.textContent = 'Message sent successfully! We\'ll get back to you soon.';
+                    formStatus.style.backgroundColor = '#10b981';
+                    formStatus.style.color = 'white';
+                    this.reset();
+                } else {
+                    throw new Error(result.message || 'Failed to send message');
                 }
-            });
-        });
-        
-        // Toggle menu when clicking the hamburger icon
-        if (mobileMenuToggle) {
-            mobileMenuToggle.setAttribute('aria-expanded', 'false');
-            mobileMenuToggle.addEventListener('click', toggleMenu);
-        }
-        
-        // Close menu when clicking outside
-        document.addEventListener('click', (e) => {
-            if (window.innerWidth <= 768 && 
-                !e.target.closest('.main-nav') && 
-                !e.target.closest('.mobile-menu-toggle')) {
-                navList.classList.remove('active');
-                mobileMenuToggle.setAttribute('aria-expanded', 'false');
-                document.body.style.overflow = 'auto';
-                const icon = mobileMenuToggle.querySelector('i');
-                if (icon) {
-                    icon.className = 'fas fa-bars';
-                }
+            } catch (error) {
+                formStatus.textContent = 'Error: ' + error.message + '. Please try again or call us directly.';
+                formStatus.style.backgroundColor = '#ef4444';
+                formStatus.style.color = 'white';
+            } finally {
+                submitButton.disabled = false;
+                submitButton.textContent = 'Send Message';
+                
+                // Hide status message after 5 seconds
+                setTimeout(() => {
+                    formStatus.style.display = 'none';
+                }, 5000);
             }
         });
 
@@ -604,7 +394,7 @@
                 header.style.webkitBackdropFilter = 'blur(10px)';
                 header.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.15)';
                 header.style.padding = '0.7rem 0';
-                header.style.borderBottom = '2px solid #f59e0b';
+                header.style.borderBottom = '3px solid #facc15';
             } else {
                 header.style.background = 'rgba(255, 255, 255, 1)';
                 header.style.backdropFilter = 'none';
@@ -620,33 +410,6 @@
         
         // Listen for scroll events
         window.addEventListener('scroll', updateHeader);
-        
-        // Smooth scroll for navigation links
-        function setupNavigationLink(selector) {
-            document.querySelectorAll(selector).forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href');
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        const headerOffset = 50; // Increased from 100 to 120 to land slightly below section top
-                        const elementPosition = targetElement.getBoundingClientRect().top;
-                        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-                        window.scrollTo({
-                            top: offsetPosition,
-                            behavior: 'smooth'
-                        });
-                    }
-                });
-            });
-        }
-
-        // Set up all navigation links
-        setupNavigationLink('a[href^="#"]');
-    });
-
-        
     </script>
 </body>
 </html>
