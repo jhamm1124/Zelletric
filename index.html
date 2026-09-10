@@ -138,6 +138,23 @@
         src: url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/webfonts/fa-solid-900.woff2') format('woff2');
     }
     </style>
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Electrician",
+        "name": "Zellectric LLC",
+        "url": "https://zellectric.com/",
+        "image": "https://zellectric.com/images/Lightbulb.png",
+        "telephone": "+17174620764",
+        "areaServed": {
+            "@type": "Place",
+            "name": "Central Pennsylvania"
+        },
+        "priceRange": "$$"
+    }
+    </script>
+
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="images/Lightbulb.png">
     <link rel="apple-touch-icon" href="images/Lightbulb.png">
@@ -297,6 +314,11 @@
     <!-- Footer -->
     <footer class="site-footer">
         <div class="footer-container">
+                <p class="footer-contact">
+                    <a href="tel:+17174620764"><i class="fas fa-phone"></i> (717) 462-0764</a>
+                    <span>|</span>
+                    <span><i class="fas fa-map-marker-alt"></i> Proudly Serving Central PA</span>
+                </p>
                 <p>&copy; 2026 Zellectric LLC. All Rights Reserved.</p>
                 <div class="footer-legal">
                     <a href="privacy-policy.html">Privacy Policy</a>

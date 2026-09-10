@@ -1540,6 +1540,31 @@ body {
     gap: 1rem;
 }
 
+.footer-contact {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 500;
+}
+
+.footer-contact a {
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.footer-contact a:hover {
+    color: var(--accent-color);
+}
+
+.footer-contact i {
+    color: var(--accent-color);
+    margin-right: 0.35rem;
+}
+
 .footer-legal {
     display: flex;
     gap: 1.5rem;
