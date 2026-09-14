@@ -668,6 +668,40 @@ body {
     font-size: 1.05rem;
 }
 
+.service-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 1.5rem;
+    color: var(--primary-color);
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.3s ease, gap 0.3s ease;
+}
+
+.service-link:hover {
+    color: var(--accent-color);
+    gap: 0.6rem;
+}
+
+.service-link i {
+    font-size: 0.9rem;
+    color: inherit;
+    background: none;
+    width: auto;
+    height: auto;
+    min-height: 0;
+    padding: 0;
+    border-radius: 0;
+    margin-bottom: 0;
+    transition: transform 0.3s ease;
+}
+
+.service-link:hover i {
+    transform: translateX(3px);
+    color: inherit;
+}
+
 /* About Section */
 .about {
     padding: var(--section-padding);
@@ -917,6 +951,10 @@ body {
     padding-left: 2.5rem;
     position: relative;
     color: #4b5563;
+}
+
+.about .features-list li {
+    color: white;
 }
 
 .features-list li i {

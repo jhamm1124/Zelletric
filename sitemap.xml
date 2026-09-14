@@ -54,6 +54,28 @@
         <priority>0.8</priority>
     </url>
 
+    <!-- Service Pages -->
+    <url>
+        <loc>https://www.zellectric.com/electrical-repairs-maintenance.html</loc>
+        <lastmod>2026-09-14</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+
+    <url>
+        <loc>https://www.zellectric.com/residential-electric.html</loc>
+        <lastmod>2026-09-14</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+
+    <url>
+        <loc>https://www.zellectric.com/ev-energy-solutions.html</loc>
+        <lastmod>2026-09-14</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+
     <!-- Areas Served -->
     <url>
         <loc>https://www.zellectric.com/areas-served.php</loc>
