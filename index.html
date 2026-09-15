@@ -34,7 +34,10 @@
     <!-- Preload and async load main styles -->
     <link rel="preload" href="styles.css?v=1.2" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="styles.css?v=1.2"></noscript>
-    
+
+    <!-- Cloudflare Turnstile -->
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
     <!-- Critical CSS Inlined -->
     <style>
     /* Critical CSS for above-the-fold content */
@@ -327,6 +330,8 @@
                     <textarea id="message" name="message" rows="4" placeholder="Your message" required aria-required="true" style="font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"></textarea>
                 </div>
 
+                <div id="turnstile-widget" style="margin-bottom: 1.5rem; display: flex; justify-content: center;"></div>
+
                 <button type="submit" class="cta-button">Send Message</button>
             </form>
         </div>
@@ -369,12 +374,35 @@
             });
         });
 
+        // Cloudflare Turnstile — explicit render since the form submits via fetch (no page reload)
+        let turnstileWidgetId = null;
+        window.addEventListener('load', function() {
+            if (window.turnstile) {
+                turnstileWidgetId = turnstile.render('#turnstile-widget', {
+                    sitekey: '0x4AAAAAAE2XEmupJrV7P49z'
+                });
+            }
+        });
+
         // Form submission handler
         document.getElementById('contactForm').addEventListener('submit', async function(e) {
             e.preventDefault();
-            
+
             const formStatus = document.getElementById('formStatus');
             const submitButton = this.querySelector('button[type="submit"]');
+
+            const turnstileToken = window.turnstile && turnstileWidgetId !== null
+                ? turnstile.getResponse(turnstileWidgetId)
+                : '';
+
+            if (!turnstileToken) {
+                formStatus.style.display = 'block';
+                formStatus.className = 'form-status';
+                formStatus.textContent = 'Please complete the verification check before sending.';
+                formStatus.style.backgroundColor = '#ef4444';
+                formStatus.style.color = 'white';
+                return;
+            }
             
             // Show loading state
             submitButton.disabled = true;
@@ -397,7 +425,8 @@
                         phone: document.getElementById('phone').value,
                         service: document.getElementById('service').value,
                         message: document.getElementById('message').value,
-                        company: document.getElementById('company').value
+                        company: document.getElementById('company').value,
+                        turnstileToken: turnstileToken
                     })
                 });
                 
@@ -422,7 +451,11 @@
             } finally {
                 submitButton.disabled = false;
                 submitButton.textContent = 'Send Message';
-                
+
+                if (window.turnstile && turnstileWidgetId !== null) {
+                    turnstile.reset(turnstileWidgetId);
+                }
+
                 setTimeout(() => {
                     formStatus.style.display = 'none';
                 }, 5000);
