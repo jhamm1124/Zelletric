@@ -379,7 +379,9 @@
         window.addEventListener('load', function() {
             if (window.turnstile) {
                 turnstileWidgetId = turnstile.render('#turnstile-widget', {
-                    sitekey: '0x4AAAAAAE2XEmupJrV7P49z'
+                    sitekey: '0x4AAAAAAE2XEmupJrV7P49z',
+                    theme: 'light',
+                    size: 'normal'
                 });
             }
         });
