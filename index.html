@@ -396,14 +396,19 @@
                     })
                 });
                 
-                const result = await response.json();
-                
+                let result = {};
+                try {
+                    result = await response.json();
+                } catch (parseError) {
+                    // Worker returned a non-JSON body; fall back to a generic message below
+                }
+
                 if (response.ok) {
                     this.reset();
                     formStatus.style.display = 'none';
                     showThankYouModal();
                 } else {
-                    throw new Error(result.message || 'Failed to send message');
+                    throw new Error(result.message || 'Something went wrong sending your message');
                 }
             } catch (error) {
                 formStatus.textContent = 'Error: ' + error.message + '. Please try again or call us directly.';
